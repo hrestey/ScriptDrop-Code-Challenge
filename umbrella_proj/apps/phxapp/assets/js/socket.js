@@ -63,7 +63,8 @@ let repoListContainer = document.querySelector("#repo-list-container")
 orgNameInput.addEventListener("keypress", event => {
     if (event.keyCode === 13) {
         channel.push("get-repo-names", {org_name: orgNameInput.value})
-            .receive("reply", {"ok", resp => { console.log(resp) }})
+            //.receive("reply", resp => { console.log("Received reply", resp) }) tried to set something up to handle
+            // replies w/o using broadcast on the server-side.
     }
 })
 
@@ -71,18 +72,18 @@ searchButton.addEventListener("click", event => {
     channel.push("get-repo-names", {org_name: orgNameInput.value})
 })
 
-channel.on("get-repo-names", payload => {
-    /*let repoName = document.createELement("li")
-    repoName.innerText = '$payload.body'
-    repoListContainer.appendChild(repoName)*/
-    console.log(payload)
+function makeListElem(repoName) {
+    let listElem = document.createElement("li")
+    listElem.innerText = repoName
+    repoListContainer.appendChild(listElem)
+}
+
+channel.on("repo-names", payload => {
+    payload.repo_names.forEach(makeListElem)
 })
 
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
-
-console.log("This happened.")
-console.log(socket)
 
 export default socket
