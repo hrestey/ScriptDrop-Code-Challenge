@@ -63,6 +63,7 @@ let repoListContainer = document.querySelector("#repo-list-container")
 orgNameInput.addEventListener("keypress", event => {
     if (event.keyCode === 13) {
         channel.push("get-repo-names", {org_name: orgNameInput.value})
+            .receive("reply", {"ok", resp => { console.log(resp) }})
     }
 })
 
