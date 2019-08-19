@@ -1,17 +1,5 @@
 defmodule Datawrapper do
-  @moduledoc """
-  Documentation for Datawrapper.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Datawrapper.hello()
-      :world
-
-  """
+    
   def parse_repo_names([head|tail]) do
       %{"name" => name} = head
       list = parse_repo_names(tail)
