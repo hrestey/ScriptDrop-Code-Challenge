@@ -1,0 +1,8 @@
+<section class="row">
+  <article class="column">
+    <h2>Get Organization Repositories</h2>
+    <input id="org-name-input" type="text">Organization Name</input>
+    <button id="search-button">Search</button>
+    <container id="repo-list-container"></container>
+  </article>
+</section>
