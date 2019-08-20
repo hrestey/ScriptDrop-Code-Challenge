@@ -62,14 +62,16 @@ let repoListContainer = document.querySelector("#repo-list-container")
 
 orgNameInput.addEventListener("keypress", event => {
     if (event.keyCode === 13) {
+        repoListContainer.innerHTML = "" // clear old lists
         channel.push("get-repo-names", {org_name: orgNameInput.value})
-            //.receive("reply", resp => { console.log("Received reply", resp) }) tried to set something up to handle
-            // replies w/o using broadcast on the server-side.
+            .receive("ok", resp => { resp.repo_names.forEach(makeListElem) })
     }
 })
 
 searchButton.addEventListener("click", event => {
+    repoListContainer.innerHTML = "" // clear old lists
     channel.push("get-repo-names", {org_name: orgNameInput.value})
+        .receive("ok", resp => { resp.repo_names.forEach(makeListElem) })
 })
 
 function makeListElem(repoName) {
@@ -81,10 +83,6 @@ function makeListElem(repoName) {
     listElem.appendChild(link)
     repoListContainer.appendChild(listElem)
 }
-
-channel.on("repo-names", payload => {
-    payload.repo_names.forEach(makeListElem)
-})
 
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
