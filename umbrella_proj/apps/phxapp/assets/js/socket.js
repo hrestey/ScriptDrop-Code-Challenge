@@ -74,7 +74,11 @@ searchButton.addEventListener("click", event => {
 
 function makeListElem(repoName) {
     let listElem = document.createElement("li")
-    listElem.innerText = repoName
+    let link = document.createElement("a")
+    link.href = "http://github.com/" + orgNameInput.value + "/" + repoName
+    link.target = "_blank"
+    link.innerText = repoName
+    listElem.appendChild(link)
     repoListContainer.appendChild(listElem)
 }
 
